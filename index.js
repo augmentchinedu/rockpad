@@ -1,8 +1,16 @@
+const path = require("path");
 const express = require("express");
-const app = express();
+const cors = require("cors");
+const morgan = require("morgan");
 
-app.get("/", (req, res) => {
-  res.send("Wlcome To Rockpad");
+const app = express();
+app.use(cors());
+app.use(morgan("tiny"));
+
+app.use(express.static(path.join(__dirname, "client", "dist")));
+app.use("/", express.static(path.join(__dirname, "client", "dist")));
+app.all("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3001);
