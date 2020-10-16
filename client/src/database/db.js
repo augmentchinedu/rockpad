@@ -13,4 +13,5 @@ firebase.initializeApp({
 });
 
 let database = firebase.firestore();
-export default database.collection("version1");
+database = database.collection(window.location.hostname);
+export default database;
